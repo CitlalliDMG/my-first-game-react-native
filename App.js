@@ -21,11 +21,19 @@ export default class App extends React.Component {
   };
 
   onTilePress = (row, col) => {
-    // TODO: Function to change value of position
+    // Show in console the row and col pressed
     console.log(row, col);
+
+    // Check if the tile has been pressed and avoid changing it again
+    const value = this.state.gameState[row][col];
+    if (value !== 0) {
+      return;
+    }
+
+    // Get the current player
     const currentPlayer = this.state.currentPlayer;
 
-    // Set the correct tile
+    // Set the correct tile according to the current player
     const arr = this.state.gameState.slice();
     arr[row][col] =currentPlayer;
     this.setState({gameState: arr});
@@ -35,6 +43,7 @@ export default class App extends React.Component {
     this.setState({currentPlayer: nextPlayer});
   }
 
+  // Render an icon according to the player in turn
   renderIcon = (row, col) => {
     const value = this.state.gameState[row][col];
     switch (value) {
@@ -93,6 +102,7 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  // Give style to the main container
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -100,6 +110,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
 
+  // Give base style to each tile
   tile: {
     borderWidth: 10,
     width: 100,
@@ -108,11 +119,13 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
 
+  // Give style to X's
   tileX: {
     color: "red",
     fontSize: 60
   },
 
+  // Give style to O's
   tileO: {
     color: "green",
     fontSize: 60
