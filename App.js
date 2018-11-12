@@ -62,6 +62,7 @@ export default class App extends React.Component {
     // Check if the tile has been pressed and avoid changing it again
     const value = this.state.gameState[row][col];
     if (value !== 0) {
+      Alert.alert("Esa casilla ya esta ocupada");
       return;
     }
 
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
 
   // Give style to O's
   tileO: {
-    color: "#40e0d0",
+    color: "#32ffff",
     fontSize: 60
   },
 
