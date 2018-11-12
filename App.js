@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Button, } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default class App extends React.Component {
@@ -88,6 +88,18 @@ export default class App extends React.Component {
     }
   }
 
+  onNewGamePress = () => {
+    // Shows an alert asking if you want to reset the game
+    Alert.alert(
+      "Reiniciar juego",
+      "¿Quieres reiniciar el juego?",
+      [
+        {text: 'No', onPress: () => console.log("Cancelada"), style:"cancel"},
+        {text: 'Sí', onPress: () => {this.initializeGame()}},
+      ]
+    )
+  }
+
   // Render an icon according to the player in turn
   renderIcon = (row, col) => {
     const value = this.state.gameState[row][col];
@@ -141,6 +153,11 @@ export default class App extends React.Component {
             {this.renderIcon(2,2)}
           </TouchableOpacity>
         </View>
+
+        <View style={styles.buttonNewGameContainer}>
+          <Button title="Reiniciar juego" onPress={this.onNewGamePress} style={styles.buttonNewGame} />
+        </View>
+
       </View>
     );
   }
@@ -174,5 +191,14 @@ const styles = StyleSheet.create({
   tileO: {
     color: "green",
     fontSize: 60
+  },
+
+  // Give style to the "new game" button
+  buttonNewGameContainer: {
+    marginTop:50,  
+  },
+
+  buttonNewGame: {
+    color: "purple",
   }
 });
