@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
 export default class App extends React.Component {
@@ -17,9 +17,44 @@ export default class App extends React.Component {
   }
 
   initializeGame = () => {
-    this.setState({ gameState: [[0, 0, 0], [0, 0, 0], [0, 0, 0]] });
+    this.setState({ 
+      gameState: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+      currentPlayer: 1,
+    });
   };
 
+  getWinner = () => {
+    const NUM_TILES = 3;
+    const arr = this.state.gameState;
+    let sum;
+    // Check if have a winner in rows
+    for (let i = 0; i < NUM_TILES; i++) {
+      sum = arr[i][0] + arr[i][1] + arr[i][2];
+      if (sum === 3) { return 1; }
+      else if (sum === -3) { return -1 };
+    }
+
+    // Check if have a winner in columns
+    for (let i = 0; i < NUM_TILES; i++) {
+      sum = arr[0][i] + arr[1][i] + arr[2][i];
+      if (sum === 3) { return 1; }
+      else if (sum === -3) { return -1 };
+    }
+
+    // Check if have a winner in diagonal 1
+    sum = arr[0][0] + arr [1][1] + arr[2][2];
+    if (sum === 3) { return 1;}
+    else if (sum == -3) { return -1; }
+
+    // Check if have a winner in diagonal 2
+    sum = arr[0][2] + arr [1][1] + arr[2][0];
+    if (sum === 3) { return 1;}
+    else if (sum == -3) { return -1; }
+
+    // If there isn't a winner
+    return 0;
+  }
+  
   onTilePress = (row, col) => {
     // Show in console the row and col pressed
     console.log(row, col);
@@ -41,6 +76,16 @@ export default class App extends React.Component {
     // Switch to other player
     const nextPlayer = (currentPlayer === 1) ? -1 : 1;
     this.setState({currentPlayer: nextPlayer});
+
+    // Run the function to check if there is a winner
+    let winner = this.getWinner();
+    if (winner === 1) {
+      Alert.alert("El jugador 1 es el ganador");
+      this.initializeGame();
+    } else if (winner === -1) {
+      Alert.alert("El jugador 2 es el ganador");
+      this.initializeGame();
+    }
   }
 
   // Render an icon according to the player in turn
