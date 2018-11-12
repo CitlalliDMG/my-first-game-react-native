@@ -167,29 +167,30 @@ const styles = StyleSheet.create({
   // Give style to the main container
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#333333",
     alignItems: "center",
     justifyContent: "center"
   },
 
   // Give base style to each tile
   tile: {
-    borderWidth: 10,
+    borderWidth: 5,
     width: 100,
     height: 100,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    borderColor: "#d3d3d3",
   },
 
   // Give style to X's
   tileX: {
-    color: "red",
+    color: "#ffff32",
     fontSize: 60
   },
 
   // Give style to O's
   tileO: {
-    color: "green",
+    color: "#40e0d0",
     fontSize: 60
   },
 
