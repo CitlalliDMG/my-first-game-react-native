@@ -5,8 +5,8 @@ import {
   View,
   TouchableOpacity,
   Alert,
-  Button,
 } from "react-native";
+import { Header } from "react-native-elements";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { CustomButton } from './components/CustomButton';
@@ -19,7 +19,7 @@ export default class App extends Component {
 
     this.state = {
       gameState: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-      currentPlayer: 1
+      currentPlayer: 1,
     };
   }
 
@@ -142,83 +142,89 @@ export default class App extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-          
-        <Text style={{ color: "#ffff00", fontSize:40, marginBottom:40 }}>TIC TAC TOE</Text>
-        
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(0, 0)}
-            style={[styles.tile, { borderLeftWidth: 0, borderTopWidth: 0 }]}
-          >
-            {this.renderIcon(0, 0)}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(0, 1)}
-            style={[styles.tile, { borderTopWidth: 0 }]}
-          >
-            {this.renderIcon(0, 1)}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(0, 2)}
-            style={[styles.tile, { borderTopWidth: 0, borderRightWidth: 0 }]}
-          >
-            {this.renderIcon(0, 2)}
-          </TouchableOpacity>
-        </View>
+      <View style={styles.mainContainer}>
 
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(1, 0)}
-            style={[styles.tile, { borderLeftWidth: 0 }]}
-          >
-            {this.renderIcon(1, 0)}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(1, 1)}
-            style={[styles.tile, {}]}
-          >
-            {this.renderIcon(1, 1)}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(1, 2)}
-            style={[styles.tile, { borderRightWidth: 0 }]}
-          >
-            {this.renderIcon(1, 2)}
-          </TouchableOpacity>
-        </View>
+        {/* <CustomHeader/> */}
+        <Header 
+          centerComponent={{text: "Tic-Tact-Toe", style: { fontSize: 20 }}}
+          outerContainerStyles={{ backgroundColor: "#32ffff", height: 90 }}
+        />
 
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(2, 0)}
-            style={[styles.tile, { borderLeftWidth: 0, borderBottomWidth: 0 }]}
-          >
-            {this.renderIcon(2, 0)}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(2, 1)}
-            style={[styles.tile, { borderBottomWidth: 0 }]}
-          >
-            {this.renderIcon(2, 1)}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.onTilePress(2, 2)}
-            style={[styles.tile, { borderBottomWidth: 0, borderRightWidth: 0 }]}
-          >
-            {this.renderIcon(2, 2)}
-          </TouchableOpacity>
-        </View>
+        <View style={styles.content}>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(0, 0)}
+              style={[styles.tile, { borderLeftWidth: 0, borderTopWidth: 0 }]}
+            >
+              {this.renderIcon(0, 0)}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(0, 1)}
+              style={[styles.tile, { borderTopWidth: 0 }]}
+            >
+              {this.renderIcon(0, 1)}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(0, 2)}
+              style={[styles.tile, { borderTopWidth: 0, borderRightWidth: 0 }]}
+            >
+              {this.renderIcon(0, 2)}
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.buttonNewGameContainer}>
-          {/* <Button
-            title="Reiniciar juego"
-            onPress={this.onNewGamePress}
-            style={styles.buttonNewGame}
-          /> */}
-          <CustomButton
-            text="Reiniciar juego"
-            onPress={this.onNewGamePress}
-          />
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(1, 0)}
+              style={[styles.tile, { borderLeftWidth: 0 }]}
+            >
+              {this.renderIcon(1, 0)}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(1, 1)}
+              style={[styles.tile, {}]}
+            >
+              {this.renderIcon(1, 1)}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(1, 2)}
+              style={[styles.tile, { borderRightWidth: 0 }]}
+            >
+              {this.renderIcon(1, 2)}
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(2, 0)}
+              style={[styles.tile, { borderLeftWidth: 0, borderBottomWidth: 0 }]}
+            >
+              {this.renderIcon(2, 0)}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(2, 1)}
+              style={[styles.tile, { borderBottomWidth: 0 }]}
+            >
+              {this.renderIcon(2, 1)}
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.onTilePress(2, 2)}
+              style={[styles.tile, { borderBottomWidth: 0, borderRightWidth: 0 }]}
+            >
+              {this.renderIcon(2, 2)}
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.buttonNewGameContainer}>
+            {/* <Button
+              title="Reiniciar juego"
+              onPress={this.onNewGamePress}
+              style={styles.buttonNewGame}
+            /> */}
+            <CustomButton
+              text="Reiniciar juego"
+              onPress={this.onNewGamePress}
+            />
+          </View>
         </View>
       </View>
     );
@@ -227,7 +233,13 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   // Give style to the main container
-  container: {
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "#333333",
+  },
+
+  // Give style to the main container
+  content: {
     flex: 1,
     backgroundColor: "#333333",
     alignItems: "center",
