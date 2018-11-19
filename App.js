@@ -1,8 +1,19 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert, Button, } from "react-native";
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Button,
+} from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+import EStyleSheet from 'react-native-extended-stylesheet';
+import { CustomButton } from './components/CustomButton';
 
-export default class App extends React.Component {
+EStyleSheet.build();
+
+export default class App extends Component {
   constructor(props) {
     super(props);
 
@@ -17,9 +28,9 @@ export default class App extends React.Component {
   }
 
   initializeGame = () => {
-    this.setState({ 
+    this.setState({
       gameState: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-      currentPlayer: 1,
+      currentPlayer: 1
     });
   };
 
@@ -30,31 +41,43 @@ export default class App extends React.Component {
     // Check if have a winner in rows
     for (let i = 0; i < NUM_TILES; i++) {
       sum = arr[i][0] + arr[i][1] + arr[i][2];
-      if (sum === 3) { return 1; }
-      else if (sum === -3) { return -1 };
+      if (sum === 3) {
+        return 1;
+      } else if (sum === -3) {
+        return -1;
+      }
     }
 
     // Check if have a winner in columns
     for (let i = 0; i < NUM_TILES; i++) {
       sum = arr[0][i] + arr[1][i] + arr[2][i];
-      if (sum === 3) { return 1; }
-      else if (sum === -3) { return -1 };
+      if (sum === 3) {
+        return 1;
+      } else if (sum === -3) {
+        return -1;
+      }
     }
 
     // Check if have a winner in diagonal 1
-    sum = arr[0][0] + arr [1][1] + arr[2][2];
-    if (sum === 3) { return 1;}
-    else if (sum == -3) { return -1; }
+    sum = arr[0][0] + arr[1][1] + arr[2][2];
+    if (sum === 3) {
+      return 1;
+    } else if (sum == -3) {
+      return -1;
+    }
 
     // Check if have a winner in diagonal 2
-    sum = arr[0][2] + arr [1][1] + arr[2][0];
-    if (sum === 3) { return 1;}
-    else if (sum == -3) { return -1; }
+    sum = arr[0][2] + arr[1][1] + arr[2][0];
+    if (sum === 3) {
+      return 1;
+    } else if (sum == -3) {
+      return -1;
+    }
 
     // If there isn't a winner
     return 0;
-  }
-  
+  };
+
   onTilePress = (row, col) => {
     // Show in console the row and col pressed
     console.log(row, col);
@@ -71,44 +94,47 @@ export default class App extends React.Component {
 
     // Set the correct tile according to the current player
     const arr = this.state.gameState.slice();
-    arr[row][col] =currentPlayer;
-    this.setState({gameState: arr});
+    arr[row][col] = currentPlayer;
+    this.setState({ gameState: arr });
 
     // Switch to other player
-    const nextPlayer = (currentPlayer === 1) ? -1 : 1;
-    this.setState({currentPlayer: nextPlayer});
+    const nextPlayer = currentPlayer === 1 ? -1 : 1;
+    this.setState({ currentPlayer: nextPlayer });
 
     // Run the function to check if there is a winner
     let winner = this.getWinner();
     if (winner === 1) {
-      Alert.alert("El jugador 1 es el ganador");
+      Alert.alert(`El jugador ⭐ (1) es el ganador`);
       this.initializeGame();
     } else if (winner === -1) {
-      Alert.alert("El jugador 2 es el ganador");
+      Alert.alert("El jugador ☁️ (2) es el ganador");
       this.initializeGame();
     }
-  }
+  };
 
   onNewGamePress = () => {
     // Shows an alert asking if you want to reset the game
-    Alert.alert(
-      "Reiniciar juego",
-      "¿Quieres reiniciar el juego?",
-      [
-        {text: 'No', onPress: () => console.log("Cancelada"), style:"cancel"},
-        {text: 'Sí', onPress: () => {this.initializeGame()}},
-      ]
-    )
-  }
+    Alert.alert("Reiniciar juego", "¿Quieres reiniciar el juego?", [
+      { text: "No", onPress: () => console.log("Cancelada"), style: "cancel" },
+      {
+        text: "Sí",
+        onPress: () => {
+          this.initializeGame();
+        }
+      }
+    ]);
+  };
 
   // Render an icon according to the player in turn
   renderIcon = (row, col) => {
     const value = this.state.gameState[row][col];
     switch (value) {
       case 1:
-        return <Icon name="close" style={styles.tileX} />;
+        return <Icon name="star-face" style={styles.tileX} />;
       case -1:
-        return <Icon name="checkbox-blank-circle-outline" style={styles.tileO} />;
+        return (
+          <Icon name="cloud" style={styles.tileO} />
+        );
       default:
         return <View />;
     }
@@ -117,48 +143,83 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+          
+        <Text style={{ color: "#ffff00", fontSize:40, marginBottom:40 }}>TIC TAC TOE</Text>
+        
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
-            onPress={() => this.onTilePress(0,0)} style={[styles.tile, { borderLeftWidth: 0, borderTopWidth: 0 }]}
+            onPress={() => this.onTilePress(0, 0)}
+            style={[styles.tile, { borderLeftWidth: 0, borderTopWidth: 0 }]}
           >
-            {this.renderIcon(0,0)}
+            {this.renderIcon(0, 0)}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onTilePress(0,1)} style={[styles.tile, { borderTopWidth: 0 }]}>
-            {this.renderIcon(0,1)}
+          <TouchableOpacity
+            onPress={() => this.onTilePress(0, 1)}
+            style={[styles.tile, { borderTopWidth: 0 }]}
+          >
+            {this.renderIcon(0, 1)}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onTilePress(0,2)} style={[styles.tile, { borderTopWidth: 0, borderRightWidth: 0 }]}>
-            {this.renderIcon(0,2)}
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={() => this.onTilePress(1,0)} style={[styles.tile, { borderLeftWidth: 0 }]}>
-            {this.renderIcon(1,0)}
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onTilePress(1,1)} style={[styles.tile, {}]}>
-            {this.renderIcon(1,1)}
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onTilePress(1,2)} style={[styles.tile, { borderRightWidth: 0 }]}>
-            {this.renderIcon(1,2)}
+          <TouchableOpacity
+            onPress={() => this.onTilePress(0, 2)}
+            style={[styles.tile, { borderTopWidth: 0, borderRightWidth: 0 }]}
+          >
+            {this.renderIcon(0, 2)}
           </TouchableOpacity>
         </View>
 
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={() => this.onTilePress(2,0)} style={[styles.tile, { borderLeftWidth: 0, borderBottomWidth: 0 }]}>
-            {this.renderIcon(2,0)}
+          <TouchableOpacity
+            onPress={() => this.onTilePress(1, 0)}
+            style={[styles.tile, { borderLeftWidth: 0 }]}
+          >
+            {this.renderIcon(1, 0)}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onTilePress(2,1)} style={[styles.tile, { borderBottomWidth: 0 }]}>
-            {this.renderIcon(2,1)}
+          <TouchableOpacity
+            onPress={() => this.onTilePress(1, 1)}
+            style={[styles.tile, {}]}
+          >
+            {this.renderIcon(1, 1)}
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.onTilePress(2,2)} style={[styles.tile, { borderBottomWidth: 0, borderRightWidth: 0 }]}>
-            {this.renderIcon(2,2)}
+          <TouchableOpacity
+            onPress={() => this.onTilePress(1, 2)}
+            style={[styles.tile, { borderRightWidth: 0 }]}
+          >
+            {this.renderIcon(1, 2)}
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            onPress={() => this.onTilePress(2, 0)}
+            style={[styles.tile, { borderLeftWidth: 0, borderBottomWidth: 0 }]}
+          >
+            {this.renderIcon(2, 0)}
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.onTilePress(2, 1)}
+            style={[styles.tile, { borderBottomWidth: 0 }]}
+          >
+            {this.renderIcon(2, 1)}
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.onTilePress(2, 2)}
+            style={[styles.tile, { borderBottomWidth: 0, borderRightWidth: 0 }]}
+          >
+            {this.renderIcon(2, 2)}
           </TouchableOpacity>
         </View>
 
         <View style={styles.buttonNewGameContainer}>
-          <Button title="Reiniciar juego" onPress={this.onNewGamePress} style={styles.buttonNewGame} />
+          {/* <Button
+            title="Reiniciar juego"
+            onPress={this.onNewGamePress}
+            style={styles.buttonNewGame}
+          /> */}
+          <CustomButton
+            text="Reiniciar juego"
+            onPress={this.onNewGamePress}
+          />
         </View>
-
       </View>
     );
   }
@@ -180,7 +241,7 @@ const styles = StyleSheet.create({
     height: 100,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "#d3d3d3",
+    borderColor: "#d3d3d3"
   },
 
   // Give style to X's
@@ -197,10 +258,6 @@ const styles = StyleSheet.create({
 
   // Give style to the "new game" button
   buttonNewGameContainer: {
-    marginTop:50,  
-  },
-
-  buttonNewGame: {
-    color: "purple",
+    marginTop: 50
   }
 });
