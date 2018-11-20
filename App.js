@@ -10,6 +10,7 @@ import { Header } from "react-native-elements";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { CustomButton } from './components/CustomButton';
+import{ Splash } from './components/Splash';
 
 EStyleSheet.build();
 
@@ -20,7 +21,13 @@ export default class App extends Component {
     this.state = {
       gameState: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
       currentPlayer: 1,
+      currentScreen: "splash",
     };
+
+    setTimeout( () => {
+      this.setState({ currentScreen: "main" })
+    }, 2000 );
+
   }
 
   componentDidMount() {
@@ -141,6 +148,12 @@ export default class App extends Component {
   };
 
   render() {
+    if (this.state.currentScreen === "splash") {
+      return (
+        <Splash/>
+      )
+    }
+
     return (
       <View style={styles.mainContainer}>
 
